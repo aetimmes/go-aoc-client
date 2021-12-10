@@ -44,7 +44,7 @@ func getInputFromSite(year, day int, sessionID string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return string(data), err
+	return strings.TrimSpace(string(data)), err
 }
 
 func redactError(err error, sessionID string) error {
