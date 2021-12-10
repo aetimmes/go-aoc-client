@@ -62,7 +62,7 @@ func getOutputCache(year, day, level int, sessionID string) (outputCache, error)
 	dir, filename := getOutputCachePath(year, day, level, sessionID)
 	f, err := ioutil.ReadFile(dir + filename)
 	var result outputCache
-	err = json.Unmarshal(f, result)
+	err = json.Unmarshal(f, &result)
 	if err != nil {
 		result = newOutputCache()
 	}
