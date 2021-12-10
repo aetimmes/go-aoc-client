@@ -9,7 +9,6 @@ import (
 	"strings"
 )
 
-
 func GetInput(year, day int, sessionID string) (string, error) {
 	if data, err := getInputFromCache(year, day, sessionID); err == nil {
 		return data, err
@@ -29,16 +28,21 @@ func GetInput(year, day int, sessionID string) (string, error) {
 	}
 }
 
-
 func getInputFromSite(year, day int, sessionID string) (string, error) {
 	url := fmt.Sprintf("https://adventofcode.com/%d/day/%d/input", year, day)
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return "", err
+	}
 	req.Header.Set("Cookie", fmt.Sprintf("session=%s", sessionID))
 	resp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Printf("error = %s \n", err)
+		return "", err
 	}
 	return string(data), err
 }
