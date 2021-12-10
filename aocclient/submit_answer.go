@@ -83,6 +83,9 @@ func GetAOCResponseType(data string) (AOCResponseType, error) {
 	if strings.Contains(data, "you have to wait") {
 		return RateLimited, nil
 	}
+	if strings.Contains(data, "That's the right answer!") {
+		return Correct, nil
+	}
 
 	return UnknownError, errors.New(fmt.Sprintf("Couldn't determine status from response: %s", data))
 }
